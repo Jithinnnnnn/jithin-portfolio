@@ -220,7 +220,7 @@ export default function App() {
             <div className="w-10 h-10 bg-gradient-to-br from-indigo-600 to-fuchsia-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-indigo-500/20">
               <Code size={20} strokeWidth={3} />
             </div>
-            <span>JITHIN<span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-fuchsia-600">.DEV</span></span>
+            <span>JITHIN<span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-fuchsia-600"></span></span>
           </div>
           <div className="hidden md:flex items-center gap-1 bg-gray-50/50 p-1.5 rounded-full border border-gray-200/50">
             {['about', 'skills', 'projects', 'contact'].map((item) => (
@@ -349,7 +349,10 @@ export default function App() {
             </div>
             <h2 className="text-5xl md:text-7xl font-black text-gray-900 mb-8 tracking-tight">Let's build something <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-fuchsia-600">extraordinary.</span></h2>
             <div className="flex flex-col md:flex-row items-center justify-center gap-6 mb-20">
-                 <a href="tel:+917012400124" className="w-full md:w-auto px-8 py-5 bg-white text-gray-900 font-bold rounded-2xl border-2 border-gray-100 hover:border-emerald-500 hover:text-emerald-600 transition-all hover:scale-105 flex items-center justify-center gap-3 hover:shadow-xl"><Phone size={20}/>jithinjose10341@gmail.com</a>
+
+            <a  href="mailto:jithinjose10341@gmail.com"   className="w-full md:w-auto px-8 py-5 bg-white text-gray-900 font-bold rounded-2xl border-2 border-gray-100 hover:border-emerald-500 hover:text-emerald-600 transition-all hover:scale-105 flex items-center justify-center gap-3 hover:shadow-xl">
+            <Mail size={20} /> jithinjose10341@gmail.com </a>
+
                  <a href="tel:+917012400124" className="w-full md:w-auto px-8 py-5 bg-white text-gray-900 font-bold rounded-2xl border-2 border-gray-100 hover:border-emerald-500 hover:text-emerald-600 transition-all hover:scale-105 flex items-center justify-center gap-3 hover:shadow-xl"><Phone size={20}/> +91-7012400124</a>
 
             </div>
