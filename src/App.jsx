@@ -289,11 +289,7 @@ export default function App() {
                    <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500/10 to-fuchsia-500/10 z-10 pointer-events-none"></div>
                    
                    {/* Use the NEW image here. Ensure you save the new generated image as 'profile-aesthetic.png' */}
-                   <img 
-                     src="/profile-image.png" 
-                     alt="Jithin Jose" 
-                     className="w-full h-auto object-cover transform transition-transform duration-700 group-hover:scale-105"
-                   />
+                  
                 </div>
                 
                 {/* 3. Floating decorative elements */}
