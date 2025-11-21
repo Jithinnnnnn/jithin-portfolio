@@ -220,7 +220,7 @@ export default function App() {
             <div className="w-10 h-10 bg-gradient-to-br from-indigo-600 to-fuchsia-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-indigo-500/20">
               <Code size={20} strokeWidth={3} />
             </div>
-            <span>JITHIN love AARYA<span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-fuchsia-600"></span></span>
+            <span>JITHIN<span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-fuchsia-600"></span></span>
           </div>
           <div className="hidden md:flex items-center gap-1 bg-gray-50/50 p-1.5 rounded-full border border-gray-200/50">
             {['about', 'skills', 'projects', 'contact'].map((item) => (
