@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Mail, Phone, Menu, X, Download, ArrowRight, Briefcase, Award, Globe, Layout, Server, Database, Terminal, Code, Linkedin, Github } from 'lucide-react';
 
+
 // --- Professional Brand Icons ---
 const JavaIcon = ({ s = 24, c }) => (
   <svg viewBox="0 0 384 512" width={s} height={s} className={c}>
@@ -264,6 +265,15 @@ export default function App() {
               <a href="https://github.com/jithinnnnnn" target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-white text-gray-900 font-bold rounded-full border border-gray-200 hover:border-transparent hover:ring-2 hover:ring-indigo-600 transition-all flex items-center gap-2 shadow-sm">
                 <Github size={20} /> GitHub
               </a>
+              <a
+  href="https://linkedin.com/in/jithin-jose-9092a91ba"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="px-8 py-4 bg-white text-gray-900 font-bold rounded-full border border-gray-200 hover:border-transparent hover:ring-2 hover:ring-indigo-600 transition-all flex items-center gap-2 shadow-sm"
+>
+  <Linkedin size={20} /> Linkedin
+</a>
+
             </div>
           </div>
           
