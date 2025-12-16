@@ -197,7 +197,7 @@ export default function App() {
             <div className="w-10 h-10 bg-gradient-to-br from-indigo-600 to-violet-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition-transform">
               <Code size={20} strokeWidth={2.5} />
             </div>
-            <span className="text-slate-900 font-heading">Jithin<span className="text-indigo-600">.dev</span></span>
+            <span className="text-slate-900 font-heading">Jithin<span className="text-indigo-600"></span></span>
           </a>
 
           <div className="hidden md:flex items-center gap-1 bg-slate-100/50 p-1.5 rounded-full border border-slate-200/50 backdrop-blur-sm">
@@ -435,9 +435,6 @@ export default function App() {
           >
             <a href="mailto:jithinjose10341@gmail.com" className="w-full md:w-auto px-8 py-4 bg-slate-900 text-white font-bold rounded-2xl hover:bg-indigo-600 active:scale-95 transition-all hover:scale-105 flex items-center justify-center gap-3 shadow-xl shadow-indigo-500/20">
               <Mail size={20} /> jithinjose10341@gmail.com
-            </a>
-            <a href="tel:+917012400124" className="w-full md:w-auto px-8 py-4 bg-white text-slate-900 font-bold rounded-2xl border border-slate-200 hover:border-indigo-500 hover:text-indigo-600 active:scale-95 transition-all hover:scale-105 flex items-center justify-center gap-3 shadow-sm">
-              <Phone size={20} /> +91-7012400124
             </a>
           </motion.div>
 
