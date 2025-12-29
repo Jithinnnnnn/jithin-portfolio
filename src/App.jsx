@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 // Fixed: Added 'Globe' to imports to solve the error
-import { Mail, Phone, Menu, X, ArrowRight, Layout, Server, Database, Terminal, Code, Linkedin, Github, Sparkles, Globe } from 'lucide-react';
+import { Mail, Phone, Menu, X, ArrowRight, Layout, Server, Database, Terminal, Code, Linkedin, Github, Sparkles, Globe, ExternalLink, Shield, Cloud } from 'lucide-react';
 
 // --- Icons ---
 const JavaIcon = ({ s = 24, c }) => (<svg viewBox="0 0 384 512" width={s} height={s} className={c}><path fill="#5382a1" d="M277.7 336.6c-29.6 3.4-64.9-6.9-87.5-29.3-29.5-29.5-47-83.4-16.5-125.7 7.4-10.2 2.2-21.6-8.3-25.7-14.1-5.5-26.6 2.5-33.3 14-16.9 29-22.4 67.5-5.5 103.4 16.3 34.6 46 58.7 75.3 67.2 44.6 12.9 97.2-8.3 95.8-23.9zm41.7 33.7c-6.8-25.1-38.8-32.8-73.9-35.2-32.6-2.3-74.3 4-103.5 32.7-19 18.7-27.1 39.7-22 51.9 5.3 12.9 22.8 17.6 51 13.7 47.3-6.5 77.3-35.7 108.7-63.9 11.4-10.3 39.7-10.1 39.7.8zm-33.6 31.5c-17.5 14.2-41 32.4-78.5 38-27.7 4.1-52-1-60.6-12.8-8.5-11.7-1.8-32 17.3-50.8 25-24.6 62.3-30.7 92.2-28.5 18.7 1.4 38.3 5 44.3 20.1 2.5 6.2-3.4 22.3-14.7 34z" /><path fill="#f89820" d="M173.3 87.7c-9.5 17.5-10.5 37.8-7.2 58.2 2.7 16.7 8.2 30.7 14.7 40.8 3.6 5.6 8.5 9.9 13.4 13.4 21.8 15.6 54.2 12 74.3-11.7 13.6-16.1 18.2-35.8 14.9-53.9-5.5-30.7-38.6-54.3-73.8-57.7-12.9-1.3-26.7 3.9-36.3 10.9zM384 302c1.3 46.2-38.3 86-91 91.4-31.4 3.2-65.2-7.9-89.6-27.4-15-12-28.5-24.8-41.8-37.2-9.7-9.1-19.1-17.9-29.5-25.3-11.6-8.2-23.9-13.5-36.4-16.3-16-3.5-30.5-2.9-43.7 1.8-10.8 3.9-17 12.5-15.3 21 3.6 18.8 32.4 38.4 66 46.3 24.7 5.8 51.3 5.4 75.3-1.3 24-6.6 45.5-18.3 65.5-32.2 10-7 20.3-13.9 31.2-19.2 12.7-6.2 26.8-10.1 42-10.1 26.7 0 52.3 12.2 63.8 33.5 4.5 8.3 6.4 18 2.1 28.7z" /></svg>);
@@ -68,6 +68,35 @@ const SKILLS = {
   }
 };
 
+// Flagship Project - Digital Complaint Box (Deployed on Azure)
+const FLAGSHIP_PROJECT = {
+  title: "Digital Complaint Box",
+  category: "Full-Stack Web Application",
+  year: "2024-2025",
+  description: "Secure employee complaint management system with role-based access control, JWT authentication, real-time complaint tracking, and admin approval workflow. Successfully deployed to Microsoft Azure App Service.",
+  tech: ["React", "Node.js", "Express", "MongoDB Atlas", "JWT", "Azure", "REST API"],
+  githubLink: "https://github.com/Jithinnnnnn/complaintbox-production",
+  liveLink: "https://complaintbox-api-eqehdzewe6cpekg3.centralindia-01.azurewebsites.net/", // Azure URL
+  gradient: "from-indigo-600 via-purple-600 to-pink-600",
+  accent: "indigo",
+  isDeployed: true,
+  features: [
+    "JWT Authentication & Authorization",
+    "Admin Approval Workflow",
+    "Role-Based Access Control",
+    "MongoDB Atlas Cloud Database",
+    "Azure App Service Deployment",
+    "Security Best Practices (Helmet, Rate Limiting, CORS)"
+  ],
+  techStack: {
+    frontend: ["React 18", "Vite", "React Router v6", "Axios"],
+    backend: ["Node.js", "Express.js", "JWT", "bcrypt"],
+    database: ["MongoDB Atlas", "Mongoose ODM"],
+    security: ["Helmet", "express-rate-limit", "express-mongo-sanitize"],
+    deployment: ["Azure App Service", "Git/GitHub"]
+  }
+};
+
 const PROJECTS = [
   {
     title: "Skill Force",
@@ -93,7 +122,6 @@ const PROJECTS = [
     tech: ["React", "Node.js", "MongoDB", "Geolocation API"],
     link: "https://github.com/Jithinnnnnn/geocart", gradient: "from-blue-600 via-indigo-600 to-violet-600", accent: "blue"
   }
-
 ];
 
 // --- Components ---
@@ -117,6 +145,119 @@ const SkillCard = ({ category, index }) => (
           {item.icon} {item.name}
         </span>
       ))}
+    </div>
+  </motion.div>
+);
+
+// Flagship Project Card Component - Mobile Optimized
+const FlagshipProjectCard = ({ project }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.6 }}
+    className="relative rounded-2xl md:rounded-3xl overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border border-slate-700/50 shadow-2xl shadow-indigo-500/10 mb-8 md:mb-12"
+  >
+    {/* Animated gradient border effect */}
+    <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 opacity-20 blur-xl"></div>
+
+    {/* Top gradient bar */}
+    <div className={`h-1.5 md:h-2 w-full bg-gradient-to-r ${project.gradient}`}></div>
+
+    {/* Badges - Stacked on mobile, side by side on desktop */}
+    <div className="absolute top-3 left-3 md:top-4 md:left-4 z-20">
+      <span className="px-2 py-1 md:px-3 md:py-1.5 bg-gradient-to-r from-amber-400 to-orange-500 text-slate-900 text-[10px] md:text-xs font-bold uppercase tracking-wider rounded-full flex items-center gap-1 shadow-lg">
+        ⭐ Flagship
+      </span>
+    </div>
+
+    <div className="absolute top-3 right-3 md:top-4 md:right-4 z-20">
+      <span className="px-2 py-1 md:px-3 md:py-1.5 bg-emerald-500/90 backdrop-blur-sm text-white text-[10px] md:text-xs font-bold uppercase tracking-wider rounded-full flex items-center gap-1 shadow-lg">
+        <Cloud size={10} className="md:w-3 md:h-3" /> Live
+      </span>
+    </div>
+
+    <div className="relative z-10 p-5 pt-12 md:p-8 md:pt-8 lg:p-10">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
+        {/* Left side - Project info */}
+        <div className="space-y-4 md:space-y-6">
+          <div>
+            <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3">
+              <span className={`px-2 py-0.5 md:px-3 md:py-1 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider text-white bg-gradient-to-r ${project.gradient}`}>
+                {project.category}
+              </span>
+              <span className="font-mono text-[10px] md:text-xs font-medium text-slate-400">{project.year}</span>
+            </div>
+            <h3 className="text-2xl md:text-3xl lg:text-4xl font-heading font-bold text-white mb-2 md:mb-4">{project.title}</h3>
+            <p className="text-slate-300 text-sm md:text-base leading-relaxed">{project.description}</p>
+          </div>
+
+          {/* Tech stack pills - Compact on mobile */}
+          <div className="flex flex-wrap gap-1.5 md:gap-2">
+            {project.tech.map((t, i) => (
+              <span key={i} className="text-[10px] md:text-xs font-semibold px-2 py-1 md:px-3 md:py-1.5 bg-white/10 text-white rounded-full border border-white/20">{t}</span>
+            ))}
+          </div>
+
+          {/* Action buttons - Full width on mobile */}
+          <div className="flex flex-col sm:flex-row gap-2 md:gap-3 pt-2 md:pt-4">
+            <a
+              href={project.liveLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2.5 md:px-6 md:py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-sm md:text-base font-bold rounded-xl hover:from-indigo-500 hover:to-purple-500 active:scale-95 transition-all flex items-center justify-center gap-2 shadow-lg shadow-indigo-500/30"
+            >
+              <ExternalLink size={16} className="md:w-[18px] md:h-[18px]" /> View Live Demo
+            </a>
+            <a
+              href={project.githubLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2.5 md:px-6 md:py-3 bg-white/10 text-white text-sm md:text-base font-bold rounded-xl border border-white/20 hover:bg-white/20 active:scale-95 transition-all flex items-center justify-center gap-2"
+            >
+              <Github size={16} className="md:w-[18px] md:h-[18px]" /> Source Code
+            </a>
+          </div>
+        </div>
+
+        {/* Right side - Features (Hidden on mobile, visible on lg screens) */}
+        <div className="hidden lg:block bg-white/5 rounded-2xl p-6 border border-white/10 backdrop-blur-sm">
+          <h4 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+            <Shield size={20} className="text-emerald-400" /> Key Features & Security
+          </h4>
+          <ul className="space-y-3">
+            {project.features.map((feature, i) => (
+              <li key={i} className="flex items-start gap-3 text-slate-300 text-sm">
+                <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-indigo-400 to-purple-400 mt-2 flex-shrink-0"></span>
+                {feature}
+              </li>
+            ))}
+          </ul>
+
+          {/* Tech categories */}
+          <div className="mt-6 pt-6 border-t border-white/10">
+            <h5 className="text-sm font-bold text-white mb-3">Tech Stack Breakdown</h5>
+            <div className="grid grid-cols-2 gap-3 text-xs">
+              <div>
+                <span className="text-indigo-400 font-semibold">Frontend:</span>
+                <span className="text-slate-400 ml-1">{project.techStack.frontend.slice(0, 2).join(", ")}</span>
+              </div>
+              <div>
+                <span className="text-emerald-400 font-semibold">Backend:</span>
+                <span className="text-slate-400 ml-1">{project.techStack.backend.slice(0, 2).join(", ")}</span>
+              </div>
+              <div>
+                <span className="text-amber-400 font-semibold">Database:</span>
+                <span className="text-slate-400 ml-1">{project.techStack.database[0]}</span>
+              </div>
+              <div>
+                <span className="text-purple-400 font-semibold">Cloud:</span>
+                <span className="text-slate-400 ml-1">{project.techStack.deployment[0]}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </motion.div>
 );
@@ -313,7 +454,7 @@ export default function App() {
             </h1>
             <p className="text-base sm:text-lg text-slate-600 mb-10 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
               Hi, I'm <span className="font-bold text-slate-900">Jithin Jose</span>, a full-stack developer specializing in
-              <span className="font-semibold text-indigo-600"> Java and MERN stack</span>. I build scalable applications with Spring Boot, React, Node.js, Express, and MongoDB, with strong experience in REST APIs, authentication, CI/CD, Docker, and cloud platforms.
+              <span className="font-semibold text-indigo-600"> Java and MERN stack</span>. I build scalable applications with Spring Boot, React, Node.js, Express, and MongoDB. <span className="font-semibold text-emerald-600">I've successfully deployed production applications to Azure</span>, with strong experience in REST APIs, authentication, security best practices, and cloud platforms.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center lg:justify-start">
@@ -401,6 +542,12 @@ export default function App() {
             View Full Archive <ArrowRight size={16} />
           </motion.a>
         </div>
+
+        {/* Flagship Project - Digital Complaint Box */}
+        <FlagshipProjectCard project={FLAGSHIP_PROJECT} />
+
+        {/* Other Projects */}
+        <h3 className="text-xl font-heading font-bold text-slate-700 mb-6 mt-8">Other Projects</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
           {PROJECTS.map((project, idx) => <ProjectCard key={idx} project={project} index={idx} />)}
         </div>
