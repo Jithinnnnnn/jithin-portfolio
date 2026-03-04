@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { motion, AnimatePresence, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
 // Consolidated all lucide-react imports to the top and aliased Layout to LayoutIcon
 import { Mail, Phone, Menu, X, ArrowRight, Layout as LayoutIcon, Server, Database, Terminal, Code, Linkedin, Github, Sparkles, Globe, ExternalLink, Shield, Cloud, Cpu, Bot, Wrench } from 'lucide-react';
 
@@ -350,10 +350,16 @@ const ProjectCard = ({ project, index }) => (
 );
 
 export default function App() {
+  const [showIntro, setShowIntro] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('about');
   const { scrollYProgress } = useScroll();
   const headerOpacity = useTransform(scrollYProgress, [0, 0.1], [0.9, 1]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowIntro(false), 3000);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -379,326 +385,381 @@ export default function App() {
   }, [isMenuOpen]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-100 via-gray-50 to-slate-100 text-slate-900 font-sans selection:bg-indigo-500 selection:text-white overflow-x-hidden">
-      {/* Navbar */}
-      <motion.nav style={{ opacity: headerOpacity }} className="fixed top-0 w-full z-50 transition-all duration-300">
-        <div className="absolute inset-0 bg-gradient-to-br from-white/90 to-gray-50/90 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.08)] border-b border-gray-200/50"></div>
-        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between relative z-50">
-          <a href="#" className="text-2xl font-bold tracking-tighter flex items-center gap-2 group">
-            <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-violet-500 rounded-[20px] flex items-center justify-center text-white shadow-[6px_6px_20px_rgba(99,102,241,0.3),-3px_-3px_12px_rgba(255,255,255,0.2)] group-hover:scale-105 transition-transform">
-              <Code size={22} strokeWidth={2.5} />
-            </div>
-            <span className="text-slate-900 font-heading drop-shadow-sm">Jithin</span>
-          </a>
-
-          <div className="hidden md:flex items-center gap-2 bg-gradient-to-br from-slate-50 to-gray-100 p-2 rounded-[28px] border border-gray-200/50 backdrop-blur-sm shadow-[inset_2px_2px_6px_rgba(0,0,0,0.06),inset_-2px_-2px_6px_rgba(255,255,255,0.9),4px_4px_16px_rgba(0,0,0,0.06)]">
-            {['about', 'skills', 'projects', 'contact'].map((item) => (
-              <a
-                key={item}
-                href={`#${item}`}
-                onClick={(e) => { e.preventDefault(); document.getElementById(item)?.scrollIntoView({ behavior: 'smooth' }); }}
-                className={`px-6 py-2.5 rounded-[20px] text-sm font-bold transition-all duration-300 ${activeSection === item
-                  ? 'bg-gradient-to-br from-white to-gray-50 text-indigo-600 shadow-[4px_4px_12px_rgba(0,0,0,0.08),-4px_-4px_12px_rgba(255,255,255,0.9)] scale-105'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
-                  }`}
-              >
-                {item.charAt(0).toUpperCase() + item.slice(1)}
-              </a>
-            ))}
+    <AnimatePresence mode="wait">
+      {showIntro ? (
+        <motion.div
+          key="intro"
+          initial={{ opacity: 1 }}
+          exit={{ opacity: 0, y: -50 }}
+          transition={{ duration: 0.6, ease: 'easeInOut' }}
+          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-gradient-to-br from-[#e6eaf0] via-[#eef1f5] to-[#e6eaf0]"
+        >
+          {/* Decorative background blobs */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-indigo-200/40 rounded-full blur-[100px] animate-pulse" />
+            <div className="absolute bottom-1/3 right-1/4 w-72 h-72 bg-fuchsia-200/30 rounded-full blur-[100px] animate-pulse" style={{ animationDelay: '0.5s' }} />
           </div>
 
-          <div className="hidden md:flex items-center gap-4">
-            <a
-              href="https://github.com/jithinnnnnn"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-10 h-10 rounded-[16px] bg-gradient-to-br from-slate-50 to-gray-100 text-slate-600 hover:text-slate-900 flex items-center justify-center shadow-[3px_3px_10px_rgba(0,0,0,0.08),-3px_-3px_10px_rgba(255,255,255,0.9)] hover:shadow-[inset_2px_2px_6px_rgba(0,0,0,0.06)] active:shadow-[inset_3px_3px_8px_rgba(0,0,0,0.08)] transition-all"
-            >
-              <Github size={20} />
-            </a>
-            <a
-              href="https://linkedin.com/in/jithin-jose-9092a91ba"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-10 h-10 rounded-[16px] bg-gradient-to-br from-slate-50 to-gray-100 text-slate-600 hover:text-blue-600 flex items-center justify-center shadow-[3px_3px_10px_rgba(0,0,0,0.08),-3px_-3px_10px_rgba(255,255,255,0.9)] hover:shadow-[inset_2px_2px_6px_rgba(0,0,0,0.06)] active:shadow-[inset_3px_3px_8px_rgba(0,0,0,0.08)] transition-all"
-            >
-              <Linkedin size={20} />
-            </a>
-            <a
-              href="#contact"
-              className="px-6 py-2.5 bg-gradient-to-br from-slate-800 to-slate-900 text-white text-sm font-bold rounded-[20px] hover:from-indigo-600 hover:to-indigo-700 transition-all shadow-[6px_6px_20px_rgba(0,0,0,0.15),-2px_-2px_8px_rgba(255,255,255,0.1)] active:shadow-[inset_3px_3px_10px_rgba(0,0,0,0.3)]"
-            >
-              Hire Me
-            </a>
-          </div>
-
-          <button
-            className="md:hidden text-slate-800 p-2 z-50 relative focus:outline-none rounded-[12px] bg-gradient-to-br from-slate-50 to-gray-100 shadow-[3px_3px_10px_rgba(0,0,0,0.08),-3px_-3px_10px_rgba(255,255,255,0.9)] active:shadow-[inset_2px_2px_6px_rgba(0,0,0,0.08)]"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+            className="relative z-10 text-center"
           >
-            {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
-          </button>
-        </div>
-
-        <AnimatePresence>
-          {isMenuOpen && (
-            <motion.div
+            <motion.h1
+              initial={{ opacity: 0, scale: 0.9, letterSpacing: '0.2em' }}
+              animate={{ opacity: 1, scale: 1, letterSpacing: '-0.02em' }}
+              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              className="text-5xl sm:text-6xl md:text-8xl font-heading font-bold text-slate-900 drop-shadow-sm"
+            >
+              Jithin Jose
+            </motion.h1>
+            <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="fixed inset-0 z-40 bg-gradient-to-br from-white to-gray-50 flex flex-col items-center justify-center md:hidden"
+              transition={{ duration: 0.6, delay: 0.8 }}
+              className="mt-4 text-sm sm:text-base text-slate-500 font-medium tracking-widest uppercase"
             >
-              <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <div className="absolute -top-20 -right-20 w-80 h-80 bg-indigo-100/50 rounded-full blur-3xl"></div>
-                <div className="absolute bottom-0 left-0 w-60 h-60 bg-fuchsia-100/50 rounded-full blur-3xl"></div>
-              </div>
+              Full-Stack Developer
+            </motion.p>
+            <motion.div
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 1.2, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              className="mt-6 mx-auto h-1 w-24 bg-gradient-to-r from-indigo-500 via-violet-500 to-fuchsia-500 rounded-full origin-center"
+            />
+          </motion.div>
+        </motion.div>
+      ) : (
+        <motion.div
+          key="main"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+        >
+          <div className="min-h-screen bg-gradient-to-br from-slate-100 via-gray-50 to-slate-100 text-slate-900 font-sans selection:bg-indigo-500 selection:text-white overflow-x-hidden">
+            {/* Navbar */}
+            <motion.nav style={{ opacity: headerOpacity }} className="fixed top-0 w-full z-50 transition-all duration-300">
+              <div className="absolute inset-0 bg-gradient-to-br from-white/90 to-gray-50/90 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.08)] border-b border-gray-200/50"></div>
+              <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between relative z-50">
+                <a href="#" className="text-2xl font-bold tracking-tighter flex items-center gap-2 group">
+                  <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-violet-500 rounded-[20px] flex items-center justify-center text-white shadow-[6px_6px_20px_rgba(99,102,241,0.3),-3px_-3px_12px_rgba(255,255,255,0.2)] group-hover:scale-105 transition-transform">
+                    <Code size={22} strokeWidth={2.5} />
+                  </div>
+                  <span className="text-slate-900 font-heading drop-shadow-sm">Jithin</span>
+                </a>
 
-              <div className="flex flex-col items-center gap-6 relative z-10 w-full px-8">
-                {['about', 'skills', 'projects', 'contact'].map((item, i) => (
-                  <motion.a
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.1 }}
-                    key={item}
-                    href={`#${item}`}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setIsMenuOpen(false);
-                      document.getElementById(item)?.scrollIntoView({ behavior: 'smooth' });
-                    }}
-                    className="text-4xl font-heading font-bold text-slate-900 hover:text-indigo-600 transition-colors drop-shadow-sm"
-                  >
-                    {item.charAt(0).toUpperCase() + item.slice(1)}
-                  </motion.a>
-                ))}
+                <div className="hidden md:flex items-center gap-2 bg-gradient-to-br from-slate-50 to-gray-100 p-2 rounded-[28px] border border-gray-200/50 backdrop-blur-sm shadow-[inset_2px_2px_6px_rgba(0,0,0,0.06),inset_-2px_-2px_6px_rgba(255,255,255,0.9),4px_4px_16px_rgba(0,0,0,0.06)]">
+                  {['about', 'skills', 'projects', 'contact'].map((item) => (
+                    <a
+                      key={item}
+                      href={`#${item}`}
+                      onClick={(e) => { e.preventDefault(); document.getElementById(item)?.scrollIntoView({ behavior: 'smooth' }); }}
+                      className={`px-6 py-2.5 rounded-[20px] text-sm font-bold transition-all duration-300 ${activeSection === item
+                        ? 'bg-gradient-to-br from-white to-gray-50 text-indigo-600 shadow-[4px_4px_12px_rgba(0,0,0,0.08),-4px_-4px_12px_rgba(255,255,255,0.9)] scale-105'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
+                        }`}
+                    >
+                      {item.charAt(0).toUpperCase() + item.slice(1)}
+                    </a>
+                  ))}
+                </div>
 
-                <motion.a
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4 }}
-                  href="#contact"
-                  onClick={() => setIsMenuOpen(false)}
-                  className="mt-6 px-10 py-4 bg-gradient-to-br from-slate-800 to-slate-900 text-white text-lg font-bold rounded-[28px] hover:from-indigo-600 hover:to-indigo-700 transition-all shadow-[8px_8px_24px_rgba(0,0,0,0.2)] active:shadow-[inset_4px_4px_12px_rgba(0,0,0,0.3)] w-full max-w-xs text-center"
-                >
-                  Hire Me
-                </motion.a>
-
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.5 }}
-                  className="flex gap-8 mt-4"
-                >
+                <div className="hidden md:flex items-center gap-4">
                   <a
                     href="https://github.com/jithinnnnnn"
                     target="_blank"
-                    className="w-12 h-12 rounded-[16px] bg-gradient-to-br from-slate-50 to-gray-100 text-slate-600 hover:text-slate-900 flex items-center justify-center shadow-[4px_4px_12px_rgba(0,0,0,0.08),-4px_-4px_12px_rgba(255,255,255,0.9)] active:shadow-[inset_3px_3px_8px_rgba(0,0,0,0.08)] transition-all transform hover:scale-110"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 rounded-[16px] bg-gradient-to-br from-slate-50 to-gray-100 text-slate-600 hover:text-slate-900 flex items-center justify-center shadow-[3px_3px_10px_rgba(0,0,0,0.08),-3px_-3px_10px_rgba(255,255,255,0.9)] hover:shadow-[inset_2px_2px_6px_rgba(0,0,0,0.06)] active:shadow-[inset_3px_3px_8px_rgba(0,0,0,0.08)] transition-all"
                   >
-                    <Github size={28} />
+                    <Github size={20} />
                   </a>
                   <a
                     href="https://linkedin.com/in/jithin-jose-9092a91ba"
                     target="_blank"
-                    className="w-12 h-12 rounded-[16px] bg-gradient-to-br from-slate-50 to-gray-100 text-slate-600 hover:text-blue-600 flex items-center justify-center shadow-[4px_4px_12px_rgba(0,0,0,0.08),-4px_-4px_12px_rgba(255,255,255,0.9)] active:shadow-[inset_3px_3px_8px_rgba(0,0,0,0.08)] transition-all transform hover:scale-110"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 rounded-[16px] bg-gradient-to-br from-slate-50 to-gray-100 text-slate-600 hover:text-blue-600 flex items-center justify-center shadow-[3px_3px_10px_rgba(0,0,0,0.08),-3px_-3px_10px_rgba(255,255,255,0.9)] hover:shadow-[inset_2px_2px_6px_rgba(0,0,0,0.06)] active:shadow-[inset_3px_3px_8px_rgba(0,0,0,0.08)] transition-all"
                   >
-                    <Linkedin size={28} />
+                    <Linkedin size={20} />
                   </a>
+                  <a
+                    href="#contact"
+                    className="px-6 py-2.5 bg-gradient-to-br from-slate-800 to-slate-900 text-white text-sm font-bold rounded-[20px] hover:from-indigo-600 hover:to-indigo-700 transition-all shadow-[6px_6px_20px_rgba(0,0,0,0.15),-2px_-2px_8px_rgba(255,255,255,0.1)] active:shadow-[inset_3px_3px_10px_rgba(0,0,0,0.3)]"
+                  >
+                    Hire Me
+                  </a>
+                </div>
+
+                <button
+                  className="md:hidden text-slate-800 p-2 z-50 relative focus:outline-none rounded-[12px] bg-gradient-to-br from-slate-50 to-gray-100 shadow-[3px_3px_10px_rgba(0,0,0,0.08),-3px_-3px_10px_rgba(255,255,255,0.9)] active:shadow-[inset_2px_2px_6px_rgba(0,0,0,0.08)]"
+                  onClick={() => setIsMenuOpen(!isMenuOpen)}
+                >
+                  {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+                </button>
+              </div>
+
+              <AnimatePresence>
+                {isMenuOpen && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="fixed inset-0 z-40 bg-gradient-to-br from-white to-gray-50 flex flex-col items-center justify-center md:hidden"
+                  >
+                    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                      <div className="absolute -top-20 -right-20 w-80 h-80 bg-indigo-100/50 rounded-full blur-3xl"></div>
+                      <div className="absolute bottom-0 left-0 w-60 h-60 bg-fuchsia-100/50 rounded-full blur-3xl"></div>
+                    </div>
+
+                    <div className="flex flex-col items-center gap-6 relative z-10 w-full px-8">
+                      {['about', 'skills', 'projects', 'contact'].map((item, i) => (
+                        <motion.a
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: i * 0.1 }}
+                          key={item}
+                          href={`#${item}`}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setIsMenuOpen(false);
+                            document.getElementById(item)?.scrollIntoView({ behavior: 'smooth' });
+                          }}
+                          className="text-4xl font-heading font-bold text-slate-900 hover:text-indigo-600 transition-colors drop-shadow-sm"
+                        >
+                          {item.charAt(0).toUpperCase() + item.slice(1)}
+                        </motion.a>
+                      ))}
+
+                      <motion.a
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.4 }}
+                        href="#contact"
+                        onClick={() => setIsMenuOpen(false)}
+                        className="mt-6 px-10 py-4 bg-gradient-to-br from-slate-800 to-slate-900 text-white text-lg font-bold rounded-[28px] hover:from-indigo-600 hover:to-indigo-700 transition-all shadow-[8px_8px_24px_rgba(0,0,0,0.2)] active:shadow-[inset_4px_4px_12px_rgba(0,0,0,0.3)] w-full max-w-xs text-center"
+                      >
+                        Hire Me
+                      </motion.a>
+
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.5 }}
+                        className="flex gap-8 mt-4"
+                      >
+                        <a
+                          href="https://github.com/jithinnnnnn"
+                          target="_blank"
+                          className="w-12 h-12 rounded-[16px] bg-gradient-to-br from-slate-50 to-gray-100 text-slate-600 hover:text-slate-900 flex items-center justify-center shadow-[4px_4px_12px_rgba(0,0,0,0.08),-4px_-4px_12px_rgba(255,255,255,0.9)] active:shadow-[inset_3px_3px_8px_rgba(0,0,0,0.08)] transition-all transform hover:scale-110"
+                        >
+                          <Github size={28} />
+                        </a>
+                        <a
+                          href="https://linkedin.com/in/jithin-jose-9092a91ba"
+                          target="_blank"
+                          className="w-12 h-12 rounded-[16px] bg-gradient-to-br from-slate-50 to-gray-100 text-slate-600 hover:text-blue-600 flex items-center justify-center shadow-[4px_4px_12px_rgba(0,0,0,0.08),-4px_-4px_12px_rgba(255,255,255,0.9)] active:shadow-[inset_3px_3px_8px_rgba(0,0,0,0.08)] transition-all transform hover:scale-110"
+                        >
+                          <Linkedin size={28} />
+                        </a>
+                      </motion.div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.nav>
+
+            {/* Hero Section */}
+            <section
+              id="about"
+              className="pt-16 pb-16 lg:pt-24 lg:pb-32 px-6 max-w-7xl mx-auto min-h-screen flex items-center justify-center relative overflow-hidden"
+            >
+
+              <div className="lg:hidden absolute top-20 left-1/2 -translate-x-1/2 w-64 h-64 bg-indigo-200/30 rounded-full blur-[100px] -z-10"></div>
+              <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-24 w-full">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, ease: "easeOut" }}
+                  className="flex-1 w-full text-center lg:text-left"
+                >
+                  <div className="inline-block px-5 py-2 mb-6 text-xs font-bold tracking-widest text-indigo-600 uppercase bg-gradient-to-br from-indigo-50 to-indigo-100/50 backdrop-blur-sm rounded-[20px] border border-indigo-200/50 shadow-[4px_4px_12px_rgba(99,102,241,0.1),-2px_-2px_8px_rgba(255,255,255,0.8)]">
+                    Available for work
+                  </div>
+                  <h1 className="text-4xl sm:text-5xl lg:text-7xl font-heading font-bold tracking-tight mb-6 leading-[1.15] text-slate-900 drop-shadow-sm">
+                    Building <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-violet-600 to-fuchsia-600">Digital Experiences</span> that Matter.
+                  </h1>
+                  <p className="text-base sm:text-lg text-slate-600 mb-10 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                    Hi, I'm <span className="font-bold text-slate-900">Jithin Jose</span>, a full-stack developer specializing in
+                    <span className="font-semibold text-indigo-600"> MERN stack </span>.<p></p> I build scalable applications with Spring Boot, React, Node.js, Express, and MongoDB. <span className="font-semibold text-emerald-600">I've successfully deployed production applications to Azure</span>, with strong experience in REST APIs, authentication, AI Integrations, and cloud platforms.
+                  </p>
+
+                  <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center lg:justify-start">
+                    <a
+                      href="#projects"
+                      className="w-full sm:w-auto px-10 py-4 bg-gradient-to-br from-slate-800 to-slate-900 text-white font-bold rounded-[28px] hover:from-indigo-600 hover:to-indigo-700 active:shadow-[inset_4px_4px_12px_rgba(0,0,0,0.3)] transition-all flex items-center justify-center gap-2 shadow-[8px_8px_24px_rgba(0,0,0,0.15),-3px_-3px_12px_rgba(255,255,255,0.1)]"
+                    >
+                      View Work <ArrowRight size={18} />
+                    </a>
+                    <a
+                      href="#contact"
+                      className="w-full sm:w-auto px-10 py-4 bg-gradient-to-br from-white to-gray-50 text-slate-900 font-bold rounded-[28px] border border-gray-200 hover:border-gray-300 active:shadow-[inset_4px_4px_12px_rgba(0,0,0,0.08)] transition-all flex items-center justify-center gap-2 shadow-[6px_6px_20px_rgba(0,0,0,0.08),-6px_-6px_20px_rgba(255,255,255,0.9)]"
+                    >
+                      Contact Me
+                    </a>
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                  className="flex-1 relative w-full max-w-lg hidden lg:block"
+                >
+                  <div className="relative aspect-square">
+                    <div className="absolute inset-0 bg-gradient-to-tr from-indigo-100 to-fuchsia-100 rounded-full blur-3xl opacity-40 animate-blob"></div>
+                    <div className="absolute top-10 right-10 w-32 h-32 bg-purple-200 rounded-full blur-3xl opacity-40 animate-blob animation-delay-2000"></div>
+                    <div className="relative z-10 translate-y-12 bg-gradient-to-br from-white/60 to-gray-50/60 backdrop-blur-2xl border border-white/50 rounded-[48px] p-10 shadow-[16px_16px_48px_rgba(0,0,0,0.12),-12px_-12px_48px_rgba(255,255,255,0.95)] rotate-3 hover:rotate-0 transition-all duration-500">
+                      <div className="flex items-center gap-4 mb-6 border-b border-gray-200/40 pb-4">
+                        <div className="flex gap-2">
+                          <div className="w-4 h-4 rounded-full bg-gradient-to-br from-red-400 to-red-500 shadow-[2px_2px_6px_rgba(239,68,68,0.3)]"></div>
+                          <div className="w-4 h-4 rounded-full bg-gradient-to-br from-yellow-400 to-yellow-500 shadow-[2px_2px_6px_rgba(234,179,8,0.3)]"></div>
+                          <div className="w-4 h-4 rounded-full bg-gradient-to-br from-green-400 to-green-500 shadow-[2px_2px_6px_rgba(34,197,94,0.3)]"></div>
+                        </div>
+                        <div className="text-xs text-slate-500 font-mono">developer.jsx</div>
+                      </div>
+                      <div className="space-y-3 font-mono text-sm">
+                        <div className="flex gap-2"><span className="text-purple-600">const</span><span className="text-blue-600">dev</span><span className="text-slate-400">=</span><span className="text-slate-600">{'{'}</span></div>
+                        <div className="pl-4 flex gap-2"><span className="text-slate-500">name:</span><span className="text-green-600">"Jithin"</span>,</div>
+                        <div className="pl-4 flex gap-2"><span className="text-slate-500">stack:</span><span className="text-green-600">"MERN + AI"</span></div>
+                        <div className="text-slate-600">{'}'}</div>
+                        <div className="pt-4 flex gap-2"><span className="text-purple-600">await</span><span className="text-blue-600">dev</span>.<span className="text-yellow-600">create()</span>;</div>
+                      </div>
+                    </div>
+                  </div>
                 </motion.div>
               </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.nav>
+            </section>
 
-      {/* Hero Section */}
-      <section
-        id="about"
-        className="pt-16 pb-16 lg:pt-24 lg:pb-32 px-6 max-w-7xl mx-auto min-h-screen flex items-center justify-center relative overflow-hidden"
-      >
-
-        <div className="lg:hidden absolute top-20 left-1/2 -translate-x-1/2 w-64 h-64 bg-indigo-200/30 rounded-full blur-[100px] -z-10"></div>
-        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-24 w-full">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="flex-1 w-full text-center lg:text-left"
-          >
-            <div className="inline-block px-5 py-2 mb-6 text-xs font-bold tracking-widest text-indigo-600 uppercase bg-gradient-to-br from-indigo-50 to-indigo-100/50 backdrop-blur-sm rounded-[20px] border border-indigo-200/50 shadow-[4px_4px_12px_rgba(99,102,241,0.1),-2px_-2px_8px_rgba(255,255,255,0.8)]">
-              Available for work
-            </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-heading font-bold tracking-tight mb-6 leading-[1.15] text-slate-900 drop-shadow-sm">
-              Building <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-violet-600 to-fuchsia-600">Digital Experiences</span> that Matter.
-            </h1>
-            <p className="text-base sm:text-lg text-slate-600 mb-10 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-              Hi, I'm <span className="font-bold text-slate-900">Jithin Jose</span>, a full-stack developer specializing in
-              <span className="font-semibold text-indigo-600"> MERN stack </span>.<p></p> I build scalable applications with Spring Boot, React, Node.js, Express, and MongoDB. <span className="font-semibold text-emerald-600">I've successfully deployed production applications to Azure</span>, with strong experience in REST APIs, authentication, AI Integrations, and cloud platforms.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center lg:justify-start">
-              <a
-                href="#projects"
-                className="w-full sm:w-auto px-10 py-4 bg-gradient-to-br from-slate-800 to-slate-900 text-white font-bold rounded-[28px] hover:from-indigo-600 hover:to-indigo-700 active:shadow-[inset_4px_4px_12px_rgba(0,0,0,0.3)] transition-all flex items-center justify-center gap-2 shadow-[8px_8px_24px_rgba(0,0,0,0.15),-3px_-3px_12px_rgba(255,255,255,0.1)]"
-              >
-                View Work <ArrowRight size={18} />
-              </a>
-              <a
-                href="#contact"
-                className="w-full sm:w-auto px-10 py-4 bg-gradient-to-br from-white to-gray-50 text-slate-900 font-bold rounded-[28px] border border-gray-200 hover:border-gray-300 active:shadow-[inset_4px_4px_12px_rgba(0,0,0,0.08)] transition-all flex items-center justify-center gap-2 shadow-[6px_6px_20px_rgba(0,0,0,0.08),-6px_-6px_20px_rgba(255,255,255,0.9)]"
-              >
-                Contact Me
-              </a>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="flex-1 relative w-full max-w-lg hidden lg:block"
-          >
-            <div className="relative aspect-square">
-              <div className="absolute inset-0 bg-gradient-to-tr from-indigo-100 to-fuchsia-100 rounded-full blur-3xl opacity-40 animate-blob"></div>
-              <div className="absolute top-10 right-10 w-32 h-32 bg-purple-200 rounded-full blur-3xl opacity-40 animate-blob animation-delay-2000"></div>
-              <div className="relative z-10 translate-y-12 bg-gradient-to-br from-white/60 to-gray-50/60 backdrop-blur-2xl border border-white/50 rounded-[48px] p-10 shadow-[16px_16px_48px_rgba(0,0,0,0.12),-12px_-12px_48px_rgba(255,255,255,0.95)] rotate-3 hover:rotate-0 transition-all duration-500">
-                <div className="flex items-center gap-4 mb-6 border-b border-gray-200/40 pb-4">
-                  <div className="flex gap-2">
-                    <div className="w-4 h-4 rounded-full bg-gradient-to-br from-red-400 to-red-500 shadow-[2px_2px_6px_rgba(239,68,68,0.3)]"></div>
-                    <div className="w-4 h-4 rounded-full bg-gradient-to-br from-yellow-400 to-yellow-500 shadow-[2px_2px_6px_rgba(234,179,8,0.3)]"></div>
-                    <div className="w-4 h-4 rounded-full bg-gradient-to-br from-green-400 to-green-500 shadow-[2px_2px_6px_rgba(34,197,94,0.3)]"></div>
+            {/* Skills Section */}
+            <section id="skills" className="py-20 md:py-32 relative">
+              <div className="max-w-7xl mx-auto px-6">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  className="text-center max-w-3xl mx-auto mb-16"
+                >
+                  <div className="inline-flex items-center gap-2 px-5 py-2 mb-4 text-xs font-bold tracking-widest text-indigo-600 uppercase bg-gradient-to-br from-indigo-50 to-indigo-100/50 rounded-[20px] shadow-[4px_4px_12px_rgba(99,102,241,0.1),-2px_-2px_8px_rgba(255,255,255,0.8)] border border-indigo-200/50">
+                    <Sparkles size={12} /> Expertise
                   </div>
-                  <div className="text-xs text-slate-500 font-mono">developer.jsx</div>
-                </div>
-                <div className="space-y-3 font-mono text-sm">
-                  <div className="flex gap-2"><span className="text-purple-600">const</span><span className="text-blue-600">dev</span><span className="text-slate-400">=</span><span className="text-slate-600">{'{'}</span></div>
-                  <div className="pl-4 flex gap-2"><span className="text-slate-500">name:</span><span className="text-green-600">"Jithin"</span>,</div>
-                  <div className="pl-4 flex gap-2"><span className="text-slate-500">stack:</span><span className="text-green-600">"MERN + AI"</span></div>
-                  <div className="text-slate-600">{'}'}</div>
-                  <div className="pt-4 flex gap-2"><span className="text-purple-600">await</span><span className="text-blue-600">dev</span>.<span className="text-yellow-600">create()</span>;</div>
+                  <h2 className="text-3xl md:text-5xl font-heading font-bold text-slate-900 mb-6 drop-shadow-sm">Technical <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-fuchsia-600">Arsenal</span></h2>
+                  <p className="text-slate-600 text-base md:text-lg">A comprehensive toolkit for building robust, intelligent, and scalable applications.</p>
+                </motion.div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-5 md:gap-6">
+                  <div className="xl:col-span-2"><SkillCard category={SKILLS.frontend} index={0} /></div>
+                  <div className="xl:col-span-2"><SkillCard category={SKILLS.backend} index={1} /></div>
+                  <div className="xl:col-span-2"><SkillCard category={SKILLS.database} index={2} /></div>
+                  <div className="xl:col-span-2"><SkillCard category={SKILLS.ai} index={3} /></div>
+                  <div className="xl:col-span-2"><SkillCard category={SKILLS.devops} index={4} /></div>
+                  <div className="xl:col-span-2"><SkillCard category={SKILLS.tools} index={5} /></div>
                 </div>
               </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+            </section>
 
-      {/* Skills Section */}
-      <section id="skills" className="py-20 md:py-32 relative">
-        <div className="max-w-7xl mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center max-w-3xl mx-auto mb-16"
-          >
-            <div className="inline-flex items-center gap-2 px-5 py-2 mb-4 text-xs font-bold tracking-widest text-indigo-600 uppercase bg-gradient-to-br from-indigo-50 to-indigo-100/50 rounded-[20px] shadow-[4px_4px_12px_rgba(99,102,241,0.1),-2px_-2px_8px_rgba(255,255,255,0.8)] border border-indigo-200/50">
-              <Sparkles size={12} /> Expertise
-            </div>
-            <h2 className="text-3xl md:text-5xl font-heading font-bold text-slate-900 mb-6 drop-shadow-sm">Technical <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-fuchsia-600">Arsenal</span></h2>
-            <p className="text-slate-600 text-base md:text-lg">A comprehensive toolkit for building robust, intelligent, and scalable applications.</p>
-          </motion.div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-5 md:gap-6">
-            <div className="xl:col-span-2"><SkillCard category={SKILLS.frontend} index={0} /></div>
-            <div className="xl:col-span-2"><SkillCard category={SKILLS.backend} index={1} /></div>
-            <div className="xl:col-span-2"><SkillCard category={SKILLS.database} index={2} /></div>
-            <div className="xl:col-span-2"><SkillCard category={SKILLS.ai} index={3} /></div>
-            <div className="xl:col-span-2"><SkillCard category={SKILLS.devops} index={4} /></div>
-            <div className="xl:col-span-2"><SkillCard category={SKILLS.tools} index={5} /></div>
+            {/* Projects Section */}
+            <section id="projects" className="py-20 md:py-32 max-w-7xl mx-auto px-6">
+              <div className="flex flex-col md:flex-row justify-between items-center md:items-end mb-12 gap-6 text-center md:text-left">
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                >
+                  <div className="inline-block px-5 py-2 mb-4 text-xs font-bold tracking-widest text-fuchsia-600 uppercase bg-gradient-to-br from-fuchsia-50 to-fuchsia-100/50 rounded-[20px] shadow-[4px_4px_12px_rgba(217,70,239,0.1),-2px_-2px_8px_rgba(255,255,255,0.8)] border border-fuchsia-200/50">Portfolio</div>
+                  <h2 className="text-3xl md:text-5xl font-heading font-bold text-slate-900 mb-4 drop-shadow-sm">Selected <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-600 to-pink-600">Works</span></h2>
+                </motion.div>
+                <motion.a
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  href="https://github.com/jithinnnnnn"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-sm font-bold text-slate-600 hover:text-fuchsia-600 transition-colors px-7 py-3 bg-gradient-to-br from-white to-gray-50 border border-gray-200 rounded-[24px] active:shadow-[inset_3px_3px_10px_rgba(0,0,0,0.08)] hover:shadow-[6px_6px_20px_rgba(0,0,0,0.1),-6px_-6px_20px_rgba(255,255,255,0.9)] shadow-[4px_4px_16px_rgba(0,0,0,0.08),-4px_-4px_16px_rgba(255,255,255,0.9)] w-full md:w-auto justify-center"
+                >
+                  View Full Archive <ArrowRight size={16} />
+                </motion.a>
+              </div>
+
+              {/* Flagship Project */}
+              <FlagshipProjectCard project={FLAGSHIP_PROJECT} />
+
+              {/* Other Projects */}
+              <h3 className="text-xl font-heading font-bold text-slate-700 mb-6 mt-8 drop-shadow-sm">Other Projects</h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                {PROJECTS.map((project, idx) => <ProjectCard key={idx} project={project} index={idx} />)}
+              </div>
+            </section>
+
+            {/* Contact Section */}
+            <footer id="contact" className="py-20 md:py-32 relative bg-gradient-to-br from-white to-gray-50 overflow-hidden">
+              <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:16px_16px] opacity-30"></div>
+              <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
+                <motion.div
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1 }}
+                  viewport={{ once: true }}
+                  className="inline-flex items-center justify-center p-5 mb-8 bg-gradient-to-br from-indigo-50 to-fuchsia-50 rounded-[28px] text-indigo-600 shadow-[8px_8px_24px_rgba(99,102,241,0.15),-6px_-6px_24px_rgba(255,255,255,0.9)]"
+                >
+                  <Mail size={36} />
+                </motion.div>
+                <motion.h2
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  className="text-3xl sm:text-5xl md:text-7xl font-heading font-bold text-slate-900 mb-8 tracking-tight break-words drop-shadow-sm"
+                >
+                  Let's build something <br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-fuchsia-600">extraordinary.</span>
+                </motion.h2>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2 }}
+                  className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 mb-12 md:mb-20"
+                >
+                  <a
+                    href="mailto:jithinjose10341@gmail.com"
+                    className="w-full md:w-auto px-10 py-4 bg-gradient-to-br from-slate-800 to-slate-900 text-white font-bold rounded-[28px] hover:from-indigo-600 hover:to-indigo-700 active:shadow-[inset_4px_4px_12px_rgba(0,0,0,0.3)] transition-all hover:scale-105 flex items-center justify-center gap-3 shadow-[8px_8px_24px_rgba(0,0,0,0.15),-3px_-3px_12px_rgba(255,255,255,0.1)]"
+                  >
+                    <Mail size={20} /> jithinjose10341@gmail.com
+                  </a>
+                </motion.div>
+
+                <div className="flex justify-center gap-6 border-t border-gray-200/50 pt-12">
+                  <a
+                    href="https://github.com/jithinnnnnn"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-12 h-12 rounded-[18px] bg-gradient-to-br from-slate-50 to-gray-100 text-slate-500 hover:text-slate-900 flex items-center justify-center shadow-[4px_4px_12px_rgba(0,0,0,0.08),-4px_-4px_12px_rgba(255,255,255,0.9)] hover:shadow-[inset_2px_2px_6px_rgba(0,0,0,0.06)] active:shadow-[inset_3px_3px_8px_rgba(0,0,0,0.08)] transition-all hover:scale-110"
+                  >
+                    <Github size={24} />
+                  </a>
+                  <a
+                    href="https://linkedin.com/in/jithin-jose-9092a91ba"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-12 h-12 rounded-[18px] bg-gradient-to-br from-slate-50 to-gray-100 text-slate-500 hover:text-blue-600 flex items-center justify-center shadow-[4px_4px_12px_rgba(0,0,0,0.08),-4px_-4px_12px_rgba(255,255,255,0.9)] hover:shadow-[inset_2px_2px_6px_rgba(0,0,0,0.06)] active:shadow-[inset_3px_3px_8px_rgba(0,0,0,0.08)] transition-all hover:scale-110"
+                  >
+                    <Linkedin size={24} />
+                  </a>
+                </div>
+                <p className="text-slate-400 text-sm font-medium mt-12">© 2026 Jithin Jose. Crafted with React & Tailwind.</p>
+              </div>
+            </footer>
           </div>
-        </div>
-      </section>
-
-      {/* Projects Section */}
-      <section id="projects" className="py-20 md:py-32 max-w-7xl mx-auto px-6">
-        <div className="flex flex-col md:flex-row justify-between items-center md:items-end mb-12 gap-6 text-center md:text-left">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-          >
-            <div className="inline-block px-5 py-2 mb-4 text-xs font-bold tracking-widest text-fuchsia-600 uppercase bg-gradient-to-br from-fuchsia-50 to-fuchsia-100/50 rounded-[20px] shadow-[4px_4px_12px_rgba(217,70,239,0.1),-2px_-2px_8px_rgba(255,255,255,0.8)] border border-fuchsia-200/50">Portfolio</div>
-            <h2 className="text-3xl md:text-5xl font-heading font-bold text-slate-900 mb-4 drop-shadow-sm">Selected <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-600 to-pink-600">Works</span></h2>
-          </motion.div>
-          <motion.a
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            href="https://github.com/jithinnnnnn"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 text-sm font-bold text-slate-600 hover:text-fuchsia-600 transition-colors px-7 py-3 bg-gradient-to-br from-white to-gray-50 border border-gray-200 rounded-[24px] active:shadow-[inset_3px_3px_10px_rgba(0,0,0,0.08)] hover:shadow-[6px_6px_20px_rgba(0,0,0,0.1),-6px_-6px_20px_rgba(255,255,255,0.9)] shadow-[4px_4px_16px_rgba(0,0,0,0.08),-4px_-4px_16px_rgba(255,255,255,0.9)] w-full md:w-auto justify-center"
-          >
-            View Full Archive <ArrowRight size={16} />
-          </motion.a>
-        </div>
-
-        {/* Flagship Project */}
-        <FlagshipProjectCard project={FLAGSHIP_PROJECT} />
-
-        {/* Other Projects */}
-        <h3 className="text-xl font-heading font-bold text-slate-700 mb-6 mt-8 drop-shadow-sm">Other Projects</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-          {PROJECTS.map((project, idx) => <ProjectCard key={idx} project={project} index={idx} />)}
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <footer id="contact" className="py-20 md:py-32 relative bg-gradient-to-br from-white to-gray-50 overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:16px_16px] opacity-30"></div>
-        <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
-          <motion.div
-            initial={{ scale: 0 }}
-            whileInView={{ scale: 1 }}
-            viewport={{ once: true }}
-            className="inline-flex items-center justify-center p-5 mb-8 bg-gradient-to-br from-indigo-50 to-fuchsia-50 rounded-[28px] text-indigo-600 shadow-[8px_8px_24px_rgba(99,102,241,0.15),-6px_-6px_24px_rgba(255,255,255,0.9)]"
-          >
-            <Mail size={36} />
-          </motion.div>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-3xl sm:text-5xl md:text-7xl font-heading font-bold text-slate-900 mb-8 tracking-tight break-words drop-shadow-sm"
-          >
-            Let's build something <br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-fuchsia-600">extraordinary.</span>
-          </motion.h2>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 mb-12 md:mb-20"
-          >
-            <a
-              href="mailto:jithinjose10341@gmail.com"
-              className="w-full md:w-auto px-10 py-4 bg-gradient-to-br from-slate-800 to-slate-900 text-white font-bold rounded-[28px] hover:from-indigo-600 hover:to-indigo-700 active:shadow-[inset_4px_4px_12px_rgba(0,0,0,0.3)] transition-all hover:scale-105 flex items-center justify-center gap-3 shadow-[8px_8px_24px_rgba(0,0,0,0.15),-3px_-3px_12px_rgba(255,255,255,0.1)]"
-            >
-              <Mail size={20} /> jithinjose10341@gmail.com
-            </a>
-          </motion.div>
-
-          <div className="flex justify-center gap-6 border-t border-gray-200/50 pt-12">
-            <a
-              href="https://github.com/jithinnnnnn"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-12 h-12 rounded-[18px] bg-gradient-to-br from-slate-50 to-gray-100 text-slate-500 hover:text-slate-900 flex items-center justify-center shadow-[4px_4px_12px_rgba(0,0,0,0.08),-4px_-4px_12px_rgba(255,255,255,0.9)] hover:shadow-[inset_2px_2px_6px_rgba(0,0,0,0.06)] active:shadow-[inset_3px_3px_8px_rgba(0,0,0,0.08)] transition-all hover:scale-110"
-            >
-              <Github size={24} />
-            </a>
-            <a
-              href="https://linkedin.com/in/jithin-jose-9092a91ba"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-12 h-12 rounded-[18px] bg-gradient-to-br from-slate-50 to-gray-100 text-slate-500 hover:text-blue-600 flex items-center justify-center shadow-[4px_4px_12px_rgba(0,0,0,0.08),-4px_-4px_12px_rgba(255,255,255,0.9)] hover:shadow-[inset_2px_2px_6px_rgba(0,0,0,0.06)] active:shadow-[inset_3px_3px_8px_rgba(0,0,0,0.08)] transition-all hover:scale-110"
-            >
-              <Linkedin size={24} />
-            </a>
-          </div>
-          <p className="text-slate-400 text-sm font-medium mt-12">© 2026 Jithin Jose. Crafted with React & Tailwind.</p>
-        </div>
-      </footer>
-    </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
