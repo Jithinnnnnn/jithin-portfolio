@@ -486,7 +486,7 @@ export default function App() {
                     href="#contact"
                     className="px-6 py-2.5 bg-gradient-to-br from-slate-800 to-slate-900 text-white text-sm font-bold rounded-[20px] hover:from-indigo-600 hover:to-indigo-700 transition-all shadow-[6px_6px_20px_rgba(0,0,0,0.15),-2px_-2px_8px_rgba(255,255,255,0.1)] active:shadow-[inset_3px_3px_10px_rgba(0,0,0,0.3)]"
                   >
-                    Hire Me
+                    Contact me
                   </a>
                 </div>
 
@@ -539,7 +539,7 @@ export default function App() {
                         onClick={() => setIsMenuOpen(false)}
                         className="mt-6 px-10 py-4 bg-gradient-to-br from-slate-800 to-slate-900 text-white text-lg font-bold rounded-[28px] hover:from-indigo-600 hover:to-indigo-700 transition-all shadow-[8px_8px_24px_rgba(0,0,0,0.2)] active:shadow-[inset_4px_4px_12px_rgba(0,0,0,0.3)] w-full max-w-xs text-center"
                       >
-                        Hire Me
+                        Contact me
                       </motion.a>
 
                       <motion.div
