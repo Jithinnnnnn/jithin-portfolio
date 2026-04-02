@@ -591,7 +591,7 @@ export default function App() {
                   </h1>
                   <p className="text-base sm:text-lg text-slate-600 mb-10 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
                     Hi, I'm <span className="font-bold text-slate-900">Jithin Jose</span>, a full-stack developer specializing in
-                    <span className="font-semibold text-indigo-600"> MERN stack </span>.<p></p> I build scalable applications with Spring Boot, React, Node.js, Express, and MongoDB. <span className="font-semibold text-emerald-600">I've successfully deployed production applications to Azure</span>, with strong experience in REST APIs, authentication, AI Integrations, and cloud platforms.
+                    <span className="font-semibold text-indigo-600"> MERN stack </span>.<p></p> I build scalable applications with , React, Node.js, Express, and MongoDB. <span className="font-semibold text-emerald-600">I've successfully deployed production applications to Azure</span>, with strong experience in REST APIs, authentication, AI Integrations, and cloud platforms.
                   </p>
 
                   <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center lg:justify-start">
@@ -614,29 +614,14 @@ export default function App() {
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.8, delay: 0.2 }}
-                  className="flex-1 relative w-full max-w-lg hidden lg:block"
+                  className="flex-1 relative w-full max-w-lg hidden lg:flex items-end justify-center"
                 >
-                  <div className="relative aspect-square">
-                    <div className="absolute inset-0 bg-gradient-to-tr from-indigo-100 to-fuchsia-100 rounded-full blur-3xl opacity-40 animate-blob"></div>
-                    <div className="absolute top-10 right-10 w-32 h-32 bg-purple-200 rounded-full blur-3xl opacity-40 animate-blob animation-delay-2000"></div>
-                    <div className="relative z-10 translate-y-12 bg-gradient-to-br from-white/60 to-gray-50/60 backdrop-blur-2xl border border-white/50 rounded-[48px] p-10 shadow-[16px_16px_48px_rgba(0,0,0,0.12),-12px_-12px_48px_rgba(255,255,255,0.95)] rotate-3 hover:rotate-0 transition-all duration-500">
-                      <div className="flex items-center gap-4 mb-6 border-b border-gray-200/40 pb-4">
-                        <div className="flex gap-2">
-                          <div className="w-4 h-4 rounded-full bg-gradient-to-br from-red-400 to-red-500 shadow-[2px_2px_6px_rgba(239,68,68,0.3)]"></div>
-                          <div className="w-4 h-4 rounded-full bg-gradient-to-br from-yellow-400 to-yellow-500 shadow-[2px_2px_6px_rgba(234,179,8,0.3)]"></div>
-                          <div className="w-4 h-4 rounded-full bg-gradient-to-br from-green-400 to-green-500 shadow-[2px_2px_6px_rgba(34,197,94,0.3)]"></div>
-                        </div>
-                        <div className="text-xs text-slate-500 font-mono">developer.jsx</div>
-                      </div>
-                      <div className="space-y-3 font-mono text-sm">
-                        <div className="flex gap-2"><span className="text-purple-600">const</span><span className="text-blue-600">dev</span><span className="text-slate-400">=</span><span className="text-slate-600">{'{'}</span></div>
-                        <div className="pl-4 flex gap-2"><span className="text-slate-500">name:</span><span className="text-green-600">"Jithin"</span>,</div>
-                        <div className="pl-4 flex gap-2"><span className="text-slate-500">stack:</span><span className="text-green-600">"MERN + AI"</span></div>
-                        <div className="text-slate-600">{'}'}</div>
-                        <div className="pt-4 flex gap-2"><span className="text-purple-600">await</span><span className="text-blue-600">dev</span>.<span className="text-yellow-600">create()</span>;</div>
-                      </div>
-                    </div>
-                  </div>
+                  <img
+                    src="/hero.png"
+                    alt="Jithin Jose - Full Stack Developer"
+                    className="w-full max-w-[480px] object-contain drop-shadow-2xl animate-float select-none"
+                    draggable={false}
+                  />
                 </motion.div>
               </div>
             </section>
