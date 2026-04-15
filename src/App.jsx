@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
 // Consolidated all lucide-react imports to the top and aliased Layout to LayoutIcon
-import { Mail, Phone, Menu, X, ArrowRight, Layout as LayoutIcon, Server, Database, Terminal, Code, Linkedin, Github, Sparkles, Globe, ExternalLink, Shield, Cloud, Cpu, Bot, Wrench } from 'lucide-react';
+import { Mail, Phone, Menu, X, ArrowRight, Layout as LayoutIcon, Server, Database, Terminal, Code, Linkedin, Github, Sparkles, Globe, ExternalLink, Shield, Cloud, Cpu, Bot, Wrench, Download } from 'lucide-react';
 
 // --- Custom SVG Icons ---
 const JavaIcon = ({ s = 24, c }) => (<svg viewBox="0 0 384 512" width={s} height={s} className={c}><path fill="#5382a1" d="M277.7 336.6c-29.6 3.4-64.9-6.9-87.5-29.3-29.5-29.5-47-83.4-16.5-125.7 7.4-10.2 2.2-21.6-8.3-25.7-14.1-5.5-26.6 2.5-33.3 14-16.9 29-22.4 67.5-5.5 103.4 16.3 34.6 46 58.7 75.3 67.2 44.6 12.9 97.2-8.3 95.8-23.9zm41.7 33.7c-6.8-25.1-38.8-32.8-73.9-35.2-32.6-2.3-74.3 4-103.5 32.7-19 18.7-27.1 39.7-22 51.9 5.3 12.9 22.8 17.6 51 13.7 47.3-6.5 77.3-35.7 108.7-63.9 11.4-10.3 39.7-10.1 39.7.8zm-33.6 31.5c-17.5 14.2-41 32.4-78.5 38-27.7 4.1-52-1-60.6-12.8-8.5-11.7-1.8-32 17.3-50.8 25-24.6 62.3-30.7 92.2-28.5 18.7 1.4 38.3 5 44.3 20.1 2.5 6.2-3.4 22.3-14.7 34z" /><path fill="#f89820" d="M173.3 87.7c-9.5 17.5-10.5 37.8-7.2 58.2 2.7 16.7 8.2 30.7 14.7 40.8 3.6 5.6 8.5 9.9 13.4 13.4 21.8 15.6 54.2 12 74.3-11.7 13.6-16.1 18.2-35.8 14.9-53.9-5.5-30.7-38.6-54.3-73.8-57.7-12.9-1.3-26.7 3.9-36.3 10.9zM384 302c1.3 46.2-38.3 86-91 91.4-31.4 3.2-65.2-7.9-89.6-27.4-15-12-28.5-24.8-41.8-37.2-9.7-9.1-19.1-17.9-29.5-25.3-11.6-8.2-23.9-13.5-36.4-16.3-16-3.5-30.5-2.9-43.7 1.8-10.8 3.9-17 12.5-15.3 21 3.6 18.8 32.4 38.4 66 46.3 24.7 5.8 51.3 5.4 75.3-1.3 24-6.6 45.5-18.3 65.5-32.2 10-7 20.3-13.9 31.2-19.2 12.7-6.2 26.8-10.1 42-10.1 26.7 0 52.3 12.2 63.8 33.5 4.5 8.3 6.4 18 2.1 28.7z" /></svg>);
@@ -353,6 +353,7 @@ export default function App() {
   const [showIntro, setShowIntro] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('about');
+  const resumeHref = '/Jithinjose.pdf';
   const { scrollYProgress } = useScroll();
   const headerOpacity = useTransform(scrollYProgress, [0, 0.1], [0.9, 1]);
 
@@ -467,6 +468,13 @@ export default function App() {
 
                 <div className="hidden md:flex items-center gap-4">
                   <a
+                    href={resumeHref}
+                    download="Jithinjose.pdf"
+                    className="px-5 py-2.5 rounded-[20px] bg-gradient-to-r from-indigo-600 via-violet-600 to-fuchsia-600 text-white font-bold text-sm flex items-center gap-2 shadow-[0_10px_24px_rgba(99,102,241,0.28),0_4px_10px_rgba(168,85,247,0.18)] hover:shadow-[0_14px_30px_rgba(99,102,241,0.34),0_6px_16px_rgba(168,85,247,0.22)] hover:scale-[1.03] active:scale-[0.98] transition-all border border-white/20"
+                  >
+                    <Download size={18} /> Resume
+                  </a>
+                  <a
                     href="https://github.com/jithinnnnnn"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -540,6 +548,18 @@ export default function App() {
                         className="mt-6 px-10 py-4 bg-gradient-to-br from-slate-800 to-slate-900 text-white text-lg font-bold rounded-[28px] hover:from-indigo-600 hover:to-indigo-700 transition-all shadow-[8px_8px_24px_rgba(0,0,0,0.2)] active:shadow-[inset_4px_4px_12px_rgba(0,0,0,0.3)] w-full max-w-xs text-center"
                       >
                         Contact me
+                      </motion.a>
+
+                      <motion.a
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.45 }}
+                        href={resumeHref}
+                        download="Jithinjose.pdf"
+                        onClick={() => setIsMenuOpen(false)}
+                        className="mt-1 px-10 py-4 bg-gradient-to-r from-indigo-600 via-violet-600 to-fuchsia-600 text-white text-lg font-bold rounded-[28px] border border-white/20 transition-all shadow-[0_16px_34px_rgba(99,102,241,0.28),0_8px_18px_rgba(168,85,247,0.2)] hover:shadow-[0_20px_42px_rgba(99,102,241,0.34),0_10px_22px_rgba(168,85,247,0.24)] hover:scale-[1.01] active:scale-[0.98] w-full max-w-xs text-center flex items-center justify-center gap-3"
+                      >
+                        <Download size={20} /> Download Resume
                       </motion.a>
 
                       <motion.div
