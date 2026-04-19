@@ -121,6 +121,35 @@ const FLAGSHIP_PROJECT = {
   }
 };
 
+const SKILLFORCE_FEATURED = {
+  title: "Skill Force",
+  category: "Enterprise Workforce Platform",
+  year: "2025",
+  description: "A full-stack manpower platform connecting job seekers, contractors, and organizations with role-based workflows. Designed for real-world operations with secure authentication, tenant-aware data boundaries, and a streamlined hiring pipeline.",
+  tech: ["React", "Node.js", "Express", "MongoDB", "JWT", "Netlify"],
+  githubLink: "https://github.com/Jithinnnnnn/skillforce-2.0",
+  liveLink: "https://skillforcein.netlify.app/",
+  gradient: "from-emerald-500 via-teal-500 to-cyan-500",
+  accent: "emerald",
+  isDeployed: true,
+  features: [
+    "Role-Based Portals for candidates, contractors, and admins",
+    "Secure JWT authentication and authorization flow",
+    "Multi-step onboarding and profile completion journey",
+    "Employer-side candidate discovery and request handling",
+    "Responsive UI optimized for desktop and mobile devices",
+    "Production deployment with CI-friendly GitHub workflow"
+  ],
+  techStack: {
+    frontend: ["React", "Tailwind CSS", "Vite"],
+    backend: ["Node.js", "Express.js", "JWT"],
+    ai: [""],
+    database: ["MongoDB", "Mongoose"],
+    security: ["JWT", "Input Validation"],
+    deployment: ["Netlify", "GitHub"]
+  }
+};
+
 export const PROJECTS = [
   {
     title: "Smart Bookmark Manager",
@@ -138,16 +167,6 @@ export const PROJECTS = [
     link: "https://smartbookmarkapp-jm8sw0nsq-jithinnnnnns-projects.vercel.app/",
     gradient: "from-blue-500 via-blue-400 to-cyan-300",
     accent: "blue"
-  },
-  {
-    title: "Skill Force",
-    category: "Manpower Portal",
-    year: "2025",
-    description: "Enterprise-grade manpower supply platform designed with role-based multi-tenant architecture to connect job seekers, contractors, and organizations. Implements secure authentication with JWT, and strict tenant-level data isolation to ensure privacy across organizations.",
-    tech: ["React.js", "Node.js", "Express", "MongoDB", "JWT Auth"],
-    link: "https://github.com/Jithinnnnnn/Skillforce",
-    gradient: "from-emerald-400 via-teal-400 to-cyan-400",
-    accent: "emerald"
   },
   {
     title: "PC Builder",
@@ -205,14 +224,13 @@ const FlagshipProjectCard = ({ project }) => (
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ duration: 0.6 }}
-    className="relative rounded-[48px] overflow-hidden bg-gradient-to-br from-slate-800 via-slate-700 to-slate-800 shadow-[16px_16px_40px_rgba(0,0,0,0.25),-8px_-8px_40px_rgba(255,255,255,0.05)] mb-8 md:mb-12 border border-slate-600/30"
+    className="relative rounded-[36px] overflow-hidden bg-white shadow-[0_20px_60px_rgba(15,23,42,0.08)] mb-8 md:mb-12 border border-slate-200/80"
   >
-    <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/20 via-purple-500/20 to-pink-500/20 blur-2xl"></div>
     <div className={`h-3 w-full bg-gradient-to-r ${project.gradient} shadow-[inset_0_2px_4px_rgba(255,255,255,0.2)]`}></div>
 
     <div className="absolute top-4 right-4 z-20">
-      <span className="px-4 py-2 bg-gradient-to-br from-emerald-400 to-emerald-500 text-white text-xs font-bold uppercase tracking-wider rounded-[20px] flex items-center gap-2 shadow-[4px_4px_12px_rgba(0,0,0,0.2),-2px_-2px_8px_rgba(255,255,255,0.1)]">
-        <Cloud size={12} /> Live
+      <span className="px-4 py-2 bg-slate-900 text-white text-xs font-bold uppercase tracking-wider rounded-[18px] flex items-center gap-2 shadow-[0_10px_24px_rgba(15,23,42,0.18)]">
+        <Cloud size={12} /> Featured
       </span>
     </div>
 
@@ -221,20 +239,23 @@ const FlagshipProjectCard = ({ project }) => (
         <div className="space-y-6">
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <span className={`px-4 py-1.5 rounded-[16px] text-xs font-bold uppercase tracking-wider text-white bg-gradient-to-r ${project.gradient} shadow-[3px_3px_10px_rgba(0,0,0,0.2)]`}>
+              <span className="px-4 py-1.5 rounded-[14px] text-xs font-bold uppercase tracking-wider text-slate-700 bg-slate-100 border border-slate-200">
+                Featured Work
+              </span>
+              <span className={`px-4 py-1.5 rounded-[14px] text-xs font-bold uppercase tracking-wider text-white bg-gradient-to-r ${project.gradient} shadow-[0_8px_18px_rgba(99,102,241,0.2)]`}>
                 {project.category}
               </span>
               <span className="font-mono text-xs font-medium text-slate-400">{project.year}</span>
             </div>
-            <h3 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold text-white mb-4 drop-shadow-sm">{project.title}</h3>
-            <p className="text-slate-300 text-base leading-relaxed">{project.description}</p>
+            <h3 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold text-slate-900 mb-4 tracking-tight">{project.title}</h3>
+            <p className="text-slate-600 text-base leading-relaxed max-w-2xl">{project.description}</p>
           </div>
 
           <div className="flex flex-wrap gap-2">
             {project.tech.map((t, i) => (
               <span
                 key={i}
-                className="text-xs font-bold px-4 py-2 bg-white/10 text-white rounded-[14px] border border-white/20 shadow-[inset_1px_1px_3px_rgba(255,255,255,0.1),2px_2px_8px_rgba(0,0,0,0.15)]"
+                className="text-xs font-semibold px-4 py-2 bg-slate-50 text-slate-700 rounded-[14px] border border-slate-200 shadow-[0_1px_2px_rgba(15,23,42,0.04)]"
               >
                 {t}
               </span>
@@ -246,7 +267,7 @@ const FlagshipProjectCard = ({ project }) => (
               href={project.liveLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-7 py-3.5 bg-gradient-to-br from-indigo-500 to-purple-500 text-white text-base font-bold rounded-[24px] hover:from-indigo-400 hover:to-purple-400 active:shadow-[inset_3px_3px_8px_rgba(0,0,0,0.2),inset_-2px_-2px_6px_rgba(255,255,255,0.1)] transition-all flex items-center justify-center gap-2 shadow-[6px_6px_20px_rgba(79,70,229,0.3)]"
+              className="px-7 py-3.5 bg-slate-900 text-white text-base font-bold rounded-[22px] hover:bg-slate-800 transition-all flex items-center justify-center gap-2 shadow-[0_12px_28px_rgba(15,23,42,0.16)]"
             >
               <ExternalLink size={18} /> View Live Demo
             </a>
@@ -254,28 +275,28 @@ const FlagshipProjectCard = ({ project }) => (
               href={project.githubLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-7 py-3.5 bg-white/10 text-white text-base font-bold rounded-[24px] border border-white/20 hover:bg-white/15 active:shadow-[inset_2px_2px_6px_rgba(0,0,0,0.15)] transition-all flex items-center justify-center gap-2 shadow-[4px_4px_16px_rgba(0,0,0,0.15)]"
+              className="px-7 py-3.5 bg-white text-slate-900 text-base font-bold rounded-[22px] border border-slate-200 hover:border-slate-300 transition-all flex items-center justify-center gap-2 shadow-[0_10px_24px_rgba(15,23,42,0.08)]"
             >
               <Github size={18} /> Source Code
             </a>
           </div>
         </div>
 
-        <div className="hidden lg:block bg-white/5 rounded-[32px] p-7 border border-white/10 backdrop-blur-sm shadow-[inset_2px_2px_8px_rgba(255,255,255,0.05),8px_8px_24px_rgba(0,0,0,0.2)]">
-          <h4 className="text-lg font-bold text-white mb-5 flex items-center gap-2">
-            <Shield size={22} className="text-emerald-400" /> Key Features & Security
+        <div className="hidden lg:block bg-slate-50 rounded-[28px] p-7 border border-slate-200 shadow-[0_10px_30px_rgba(15,23,42,0.05)]">
+          <h4 className="text-lg font-bold text-slate-900 mb-5 flex items-center gap-2">
+            <Shield size={22} className="text-emerald-600" /> Key Features & Security
           </h4>
           <ul className="space-y-3.5">
             {project.features.map((feature, i) => (
-              <li key={i} className="flex items-start gap-3 text-slate-300 text-sm">
-                <span className="w-2 h-2 rounded-full bg-gradient-to-r from-indigo-400 to-purple-400 mt-2 flex-shrink-0 shadow-[0_0_8px_rgba(99,102,241,0.4)]"></span>
+              <li key={i} className="flex items-start gap-3 text-slate-600 text-sm">
+                <span className="w-2 h-2 rounded-full bg-gradient-to-r from-indigo-500 to-violet-500 mt-2 flex-shrink-0 shadow-[0_0_8px_rgba(99,102,241,0.3)]"></span>
                 {feature}
               </li>
             ))}
           </ul>
 
-          <div className="mt-7 pt-7 border-t border-white/10">
-            <h5 className="text-sm font-bold text-white mb-4">Tech Stack Breakdown</h5>
+          <div className="mt-7 pt-7 border-t border-slate-200">
+            <h5 className="text-sm font-bold text-slate-900 mb-4">Tech Stack Breakdown</h5>
             <div className="grid grid-cols-2 gap-4 text-xs">
               <div>
                 <span className="text-indigo-400 font-semibold">Frontend:</span>
@@ -311,17 +332,17 @@ const ProjectCard = ({ project, index }) => (
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ duration: 0.5, delay: index * 0.1 }}
-    className="group relative rounded-[32px] overflow-hidden bg-gradient-to-br from-white to-gray-50 shadow-[10px_10px_30px_rgba(0,0,0,0.1),-10px_-10px_30px_rgba(255,255,255,0.9)] hover:shadow-[14px_14px_40px_rgba(0,0,0,0.14),-14px_-14px_40px_rgba(255,255,255,0.95)] active:shadow-[inset_5px_5px_15px_rgba(0,0,0,0.1),inset_-5px_-5px_15px_rgba(255,255,255,0.9)] transition-all duration-300 flex flex-col h-full border border-gray-100/50"
+    className="group relative rounded-[28px] overflow-hidden bg-white shadow-[0_12px_40px_rgba(15,23,42,0.08)] hover:shadow-[0_18px_50px_rgba(15,23,42,0.12)] transition-all duration-300 flex flex-col h-full border border-slate-200/80"
   >
-    <div className={`h-3 w-full bg-gradient-to-r ${project.gradient} shadow-[inset_0_1px_3px_rgba(255,255,255,0.2)]`}></div>
+    <div className={`h-2 w-full bg-gradient-to-r ${project.gradient}`}></div>
     <div className="p-7 flex flex-col flex-grow">
       <div className="flex justify-between items-start mb-5">
-        <div className={`px-4 py-1.5 rounded-[14px] text-[10px] font-bold uppercase tracking-wider text-white bg-gradient-to-r ${project.gradient} shadow-[3px_3px_8px_rgba(0,0,0,0.15)]`}>
+        <div className={`px-4 py-1.5 rounded-[14px] text-[10px] font-bold uppercase tracking-wider text-white bg-gradient-to-r ${project.gradient} shadow-[0_8px_18px_rgba(99,102,241,0.18)]`}>
           {project.category}
         </div>
         <span className="font-mono text-xs font-medium text-slate-400">{project.year}</span>
       </div>
-      <h3 className="text-2xl font-heading font-bold text-slate-900 mb-3 group-hover:text-indigo-600 transition-colors drop-shadow-sm">{project.title}</h3>
+      <h3 className="text-2xl font-heading font-bold text-slate-900 mb-3 tracking-tight group-hover:text-indigo-600 transition-colors">{project.title}</h3>
       <p className="text-slate-600 text-sm mb-6 leading-relaxed flex-grow">{project.description}</p>
 
       <div className="space-y-4">
@@ -329,21 +350,33 @@ const ProjectCard = ({ project, index }) => (
           {project.tech.map((t, i) => (
             <span
               key={i}
-              className="text-[11px] font-bold px-3 py-1.5 bg-gradient-to-br from-slate-50 to-slate-100 text-slate-700 rounded-[12px] border border-slate-200/50 shadow-[2px_2px_6px_rgba(0,0,0,0.06),-2px_-2px_6px_rgba(255,255,255,0.8)]"
+              className="text-[11px] font-semibold px-3 py-1.5 bg-slate-50 text-slate-700 rounded-[12px] border border-slate-200"
             >
               {t}
             </span>
           ))}
         </div>
         <a
-          href={project.link}
+          href={project.liveLink || project.link || project.githubLink}
+          target="_blank"
+          rel="noopener noreferrer"
           className={`inline-flex items-center gap-2 text-sm font-bold ${project.accent === 'blue' ? 'text-blue-600 hover:text-blue-700' :
             project.accent === 'emerald' ? 'text-emerald-600 hover:text-emerald-700' :
               'text-pink-600 hover:text-pink-700'
             } transition-colors drop-shadow-sm`}
         >
-          View Project <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+          View Live <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
         </a>
+        {project.githubLink && (
+          <a
+            href={project.githubLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-sm font-bold text-slate-600 hover:text-slate-900 transition-colors"
+          >
+            Source Code <Github size={15} className="group-hover:translate-x-1 transition-transform" />
+          </a>
+        )}
       </div>
     </div>
   </motion.div>
@@ -680,8 +713,9 @@ export default function App() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                 >
-                  <div className="inline-block px-5 py-2 mb-4 text-xs font-bold tracking-widest text-fuchsia-600 uppercase bg-gradient-to-br from-fuchsia-50 to-fuchsia-100/50 rounded-[20px] shadow-[4px_4px_12px_rgba(217,70,239,0.1),-2px_-2px_8px_rgba(255,255,255,0.8)] border border-fuchsia-200/50">Portfolio</div>
-                  <h2 className="text-3xl md:text-5xl font-heading font-bold text-slate-900 mb-4 drop-shadow-sm">Selected <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-600 to-pink-600">Works</span></h2>
+                  <div className="inline-block px-5 py-2 mb-4 text-xs font-bold tracking-[0.24em] text-slate-500 uppercase bg-slate-100 rounded-[20px] border border-slate-200">Portfolio</div>
+                  <h2 className="text-3xl md:text-5xl font-heading font-bold text-slate-900 mb-4 tracking-tight">Selected <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-violet-600">Works</span></h2>
+                  <p className="text-slate-600 text-base md:text-lg max-w-2xl">A curated set of projects that highlight product thinking, clean implementation, and practical delivery.</p>
                 </motion.div>
                 <motion.a
                   initial={{ opacity: 0, x: 20 }}
@@ -690,7 +724,7 @@ export default function App() {
                   href="https://github.com/jithinnnnnn"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-sm font-bold text-slate-600 hover:text-fuchsia-600 transition-colors px-7 py-3 bg-gradient-to-br from-white to-gray-50 border border-gray-200 rounded-[24px] active:shadow-[inset_3px_3px_10px_rgba(0,0,0,0.08)] hover:shadow-[6px_6px_20px_rgba(0,0,0,0.1),-6px_-6px_20px_rgba(255,255,255,0.9)] shadow-[4px_4px_16px_rgba(0,0,0,0.08),-4px_-4px_16px_rgba(255,255,255,0.9)] w-full md:w-auto justify-center"
+                  className="flex items-center gap-2 text-sm font-bold text-slate-700 hover:text-indigo-600 transition-colors px-7 py-3 bg-white border border-slate-200 rounded-[22px] shadow-[0_10px_24px_rgba(15,23,42,0.08)] w-full md:w-auto justify-center"
                 >
                   View Full Archive <ArrowRight size={16} />
                 </motion.a>
@@ -698,6 +732,9 @@ export default function App() {
 
               {/* Flagship Project */}
               <FlagshipProjectCard project={FLAGSHIP_PROJECT} />
+
+              {/* Skill Force Featured Project */}
+              <FlagshipProjectCard project={SKILLFORCE_FEATURED} />
 
               {/* Other Projects */}
               <h3 className="text-xl font-heading font-bold text-slate-700 mb-6 mt-8 drop-shadow-sm">Other Projects</h3>
